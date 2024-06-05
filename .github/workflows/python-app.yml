@@ -36,7 +36,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with nose2
       run: |
-        cd ./tests
+        cd tests
         nose2 -v
         if [[ $? -eq 0 ]]; then
           echo "All tests PASSED"
