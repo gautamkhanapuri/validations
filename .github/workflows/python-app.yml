@@ -5,7 +5,6 @@ name: Run division tests
 
 on:
   push:
-    branches: [ "main" ]
     paths: ["division/**"]
   pull_request:
     branches: [ "main" ]
