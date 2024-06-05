@@ -27,7 +27,7 @@ class Divi(unittest.TestCase):
         assert divi(-10, 2, False) == (-5, 0), "expecting q = -5 and x = 0"
         assert divi(10, -2, False) == (-5, 0), "expecting q = -5 and x = 0"
         assert divi(-10, -2, False) == (5, 0), "expecting q = 5 and x = 0"
-        assert divi(-8, -2, False) == (4, 0), "expecting q = 4 and x = 0"
+        assert divi(-8, -2, False) == (4, 0), "expecting q = 4 & x = 0"
 
     def test_divi_dividend_greaterthan_divisor_and_x_notdivisibleby_yfrFalse(self):
         # when fr = False
