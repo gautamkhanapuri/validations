@@ -1,0 +1,50 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Run division tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: |
+        curdir=`pwd`
+        export PYTHONPATH=$curdir/division:$curdir/division/source:$curdir/division/tests
+        cd division
+        python -m venv div_test_env
+        source div_test_env/bin/activate
+        python -m pip install --upgrade pip
+        pip list
+        pip install nose2
+        pip list
+        if [ -f requirements.txt ]; then 
+          pip install -r requirements.txt 
+        fi
+        cd tests
+        nose2 -v
+        if [[ $? -eq 0 ]]; then
+          echo "All tests PASSED"
+          deactivate
+          cd ..
+          /bin/rm -rf div_test_env
+          exit 0
+        else
+          echo "Tests FAILED. Fix the code and rerun the pipeline"
+          deactivate
+          cd ..
+          /bin/rm -rf div_test_env
+          exit 1
+        fi
