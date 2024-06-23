@@ -33,7 +33,7 @@ def convert_ip(ipadr):
   7. range of ip addresses as integers
   8. range of ip addresses in hexadecimal form
   9. number of available network addresses
-  10. maskbits
+  10. number of maskbits
   11. netmask (255.255.255.0 - 24)
   12. netmask in hexadecimal form
   """
