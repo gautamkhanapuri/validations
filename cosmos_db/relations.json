@@ -1,0 +1,57 @@
+[
+  {
+    "name": "mn shetty",
+    "related": {
+      "son": "ah shetty",
+      "daughter": "at shetty",
+      "spouse": "mn shetty"
+    },
+    "relations": [
+      "ah shetty",
+      "at shetty",
+      "mn shetty"
+    ]
+  },
+  {
+    "name": "sl shetty",
+    "related": {
+      "son": "ah shetty",
+      "daughter": "at shetty",
+      "spouse": "mn shetty"
+    },
+    "relations": [
+      "ah shetty",
+      "at shetty",
+      "mn shetty"
+    ]
+  },
+  {
+    "name": "ah shetty",
+    "related": {
+      "son": "ah shetty",
+      "daughter": "at shetty",
+      "spouse": "mn shetty"
+    },
+    "relations": [
+      "ah shetty",
+      "at shetty",
+      "mn shetty"
+    ]
+  },
+  {
+    "name": "at shetty",
+    "related": {
+      "father": "sl shetty",
+      "mother": "mn shetty",
+      "spouse": "kl rahul",
+      "brother": "ah shetty"
+    },
+    "relations": [
+      "ah shetty",
+      "sl shetty",
+      "mn shetty",
+      "kl rahul"
+    ],
+    "id": "5"
+  }
+]

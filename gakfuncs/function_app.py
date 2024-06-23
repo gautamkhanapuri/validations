@@ -12,6 +12,9 @@ from openpyxl import load_workbook, Workbook
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 def hexip(ipadr):
+  """
+  Converts the integers in an ip address into their respective hexadecimal forms.
+  """
   hx = []
   for i in str(ipadr).split('.'):
     hx.append(format(int(i), '02X'))
@@ -19,6 +22,21 @@ def hexip(ipadr):
 
 
 def convert_ip(ipadr):
+  """
+  Calculates:
+  1. input value
+  2. input ip - returns only the ip without network info
+  3. ip address as an integer
+  4. ip address in hexadecimal form
+  5. the ip address with mask in prefix notation
+  6. range of available id addresses
+  7. range of ip addresses as integers
+  8. range of ip addresses in hexadecimal form
+  9. number of available network addresses
+  10. maskbits
+  11. netmask (255.255.255.0 - 24)
+  12. netmask in hexadecimal form
+  """
   data = {}
   try:
     ip = IPv4Interface(ipadr)
@@ -44,17 +62,18 @@ def convert_ip(ipadr):
 
 @app.route(route="subnet")
 def subnet(req: func.HttpRequest) -> func.HttpResponse:
+    """
+    Main function. 
+    Checks the existence of q and calls convert_ip function. 
+    Returns the output of convert_ip in json format
+    """
     logging.info('Python HTTP trigger subnet function processed a request.')
-
     ipaddr = None
     data = {}
     if 'q' in req.params:
         ipaddr = req.params.get('q', None)
     if ipaddr:
         data = convert_ip(ipaddr)
-    # data['ip'] = req.remote_addr
-    # data['host'] = request.host
-    # return jsonify(data)
     return func.HttpResponse(
         json.dumps(data),
          mimetype="application/json"
@@ -63,6 +82,12 @@ def subnet(req: func.HttpRequest) -> func.HttpResponse:
 
 @app.route(route="epoch")
 def epoch(req: func.HttpRequest) -> func.HttpResponse:
+    """
+    Returns the current epoch if input parameter e is not provided. If e is provided, calculates the epoch for the given date and time
+    Returns current time and date in UTC.
+    Returns current time and date in current time zone.
+    Returns the existing timezones in a country if country code is provided.
+    """
     logging.info('Python Http trigger epoch function processed a request.')
     try:
         e = req.params.get('e', None)
@@ -111,6 +136,10 @@ def epoch(req: func.HttpRequest) -> func.HttpResponse:
        
 
 def get_reportdata(p, r, n):
+    """
+    Returns emi
+    Returns the calculations for each month
+    """
     data = []
     MR = r/(12.0 *  100)
     val1 = pow((1+MR),n)
@@ -136,6 +165,9 @@ def get_reportdata(p, r, n):
 
 
 def get_report_metadata():
+    """
+    Defines the column width, column type and column name for each column in xlsx file
+    """
     metadata = {
         'month': {'width': 10, 'format': 'text', 'title': 'Month'},
         'principal': {'width': 80, 'format': 'text', 'title': 'Principal'},
@@ -160,7 +192,6 @@ def get_reportbytes(appdata):
     }
     wb = Workbook()
     ws = wb['Sheet']
-    # Add column formatting here.
     for colid, col in enumerate(metadata['order']):
         ws.cell(row=1, column=colid + 1).value = metadata[col]['title']
     for rowid, record in enumerate(appdata):
