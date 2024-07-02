@@ -91,8 +91,10 @@ def epoch(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python Http trigger epoch function processed a request.')
     try:
         e = req.params.get('e', None)
-        if e is None:
-            now = int(time.time())
+        if e:
+          now = int(e)
+        else:
+          now = int(time.time())
 
         intz = req.params.get('intz', 'Asia/Kolkata')
         UTC = pytz.utc
